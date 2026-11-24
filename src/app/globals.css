@@ -1,0 +1,539 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --background: #f9fafb;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --border: #e5e7eb;
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
+  --input: #e5e7eb;
+  --ring: #0d9488;
+  --radius: 0.5rem;
+  --radius-sm: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --spacing: 0.25rem;
+}
+
+.dark {
+  --background: #030712;
+  --foreground: #f9fafb;
+  --card: #111827;
+  --card-foreground: #f9fafb;
+  --border: #1f2937;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --input: #1f2937;
+  --ring: #14b8a6;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(13, 148, 136, 0.15);
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+.dark {
+  scrollbar-color: #374151 transparent;
+}
+
+/* Screen reader only utility - visible on focus */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible for accessibility - high contrast */
+*:focus-visible {
+  outline: 2px solid #0d9488;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark *:focus-visible {
+  outline-color: #14b8a6;
+}
+
+/* Smooth theme transition - only for colors to avoid jank */
+html.dark {
+  color-scheme: dark;
+}
+body {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print-only and no-print helpers */
+.print-only { display: none; }
+.no-print { display: block; }
+
+/* Print styles */
+@media print {
+  .print-only { display: block !important; }
+  .no-print { display: none !important; }
+  body { background: white !important; }
+  .print\:hidden, nav, aside, header, footer, [data-mobile-nav] { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; overflow: visible !important; }
+  .flex.h-screen { display: block !important; }
+  * { box-shadow: none !important; }
+
+  /* Print layout styles */
+  .print-cover {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    page-break-after: always;
+  }
+  .print-cover-content {
+    max-width: 600px;
+  }
+  .print-school-badge {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d9488;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .print-project-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .print-meta-line {
+    font-size: 16px;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+  }
+  .print-date {
+    margin-top: 1rem;
+    font-size: 14px;
+  }
+  .print-toc {
+    page-break-after: always;
+    padding: 2rem;
+  }
+  .print-toc-list {
+    list-style: none;
+    padding: 0;
+  }
+  .print-toc-item {
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e7eb;
+    color: #374151;
+  }
+  .print-section {
+    page-break-before: always;
+    padding: 2rem;
+  }
+  .print-section:first-of-type {
+    page-break-before: auto;
+  }
+  .print-section-heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #0d9488;
+  }
+  .print-sub-heading {
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .print-field {
+    margin-bottom: 1.25rem;
+  }
+  .print-field-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+  }
+  .print-field-value {
+    font-size: 14px;
+    color: #111827;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  .print-empty {
+    font-size: 14px;
+    color: #9ca3af;
+    font-style: italic;
+  }
+  .print-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .print-sources {
+    margin-top: 0.5rem;
+  }
+  .print-source-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .print-source-number {
+    font-size: 13px;
+    color: #6b7280;
+    flex-shrink: 0;
+    min-width: 2rem;
+  }
+  .print-source-details {
+    flex: 1;
+  }
+  .print-source-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+  .print-source-authors {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+  .print-source-citation {
+    font-size: 12px;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .print-source-notes {
+    font-size: 13px;
+    color: #374151;
+    margin-top: 4px;
+  }
+  .print-decisions {
+    margin-top: 0.5rem;
+  }
+  .print-decision-item {
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+  .print-decision-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+  }
+  .print-decision-reason {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+  .print-decision-alternatives {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 4px;
+  }
+  .print-milestones {
+    margin-top: 0.5rem;
+  }
+  .print-milestone-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 0;
+    font-size: 14px;
+    color: #374151;
+  }
+  .print-check {
+    color: #059669;
+    font-weight: 600;
+  }
+  .print-uncheck {
+    color: #9ca3af;
+  }
+  .print-milestone-name {
+    flex: 1;
+  }
+  .print-milestone-date {
+    font-size: 12px;
+    color: #9ca3af;
+  }
+  .print-tasks {
+    margin-top: 0.5rem;
+  }
+  .print-task-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 4px 0;
+    font-size: 14px;
+    color: #374151;
+  }
+  .print-task-title {
+    flex: 1;
+  }
+  .print-files-section {
+    margin-top: 1.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+  }
+  .print-file-item {
+    font-size: 13px;
+    color: #6b7280;
+    padding: 3px 0;
+  }
+  .print-file-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 0.75rem;
+  }
+  .print-file-table th {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 2px solid #e5e7eb;
+    font-weight: 600;
+    color: #374151;
+  }
+  .print-file-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #6b7280;
+  }
+  .print-footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  /* Academic poster (landscape via print dialog) */
+  .poster-sheet {
+    color: #111827;
+    background: white;
+  }
+  .poster-banner {
+    background: #0f766e;
+    color: white;
+    text-align: center;
+    padding: 1.25rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .poster-title {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 0.4rem 0;
+  }
+  .poster-meta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0 0 0.25rem 0;
+    opacity: 0.95;
+  }
+  .poster-members {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+  }
+  .poster-keywords {
+    font-size: 11px;
+    font-style: italic;
+    margin: 0;
+    opacity: 0.9;
+  }
+  .poster-body {
+    column-count: 3;
+    column-gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  .poster-block {
+    break-inside: avoid;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .poster-heading {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0f766e;
+    border-bottom: 2px solid #0f766e;
+    padding-bottom: 0.25rem;
+    margin: 0 0 0.5rem 0;
+  }
+  .poster-text {
+    font-size: 11px;
+    line-height: 1.55;
+    color: #1f2937;
+    margin: 0 0 0.4rem 0;
+    white-space: pre-wrap;
+  }
+  .poster-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    margin-top: 0.4rem;
+  }
+  .poster-table th {
+    text-align: left;
+    padding: 4px 6px;
+    border-bottom: 2px solid #0f766e;
+    color: #0f766e;
+    font-weight: 700;
+  }
+  .poster-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+  }
+}
+
+/* Mobile safe-area & responsive utilities */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Ensure bottom nav accounts for iOS home indicator */
+@supports (padding: max(0px)) {
+  .pb-safe-nav {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Touch targets: minimum 44px on mobile */
+@media (max-width: 640px) {
+  button,
+  a,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+  }
+  nav a,
+  header button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* Prevent horizontal overflow on small screens */
+  body {
+    max-width: 100vw;
+  }
+  /* Improve tap highlight */
+  * {
+    -webkit-tap-highlight-color: rgba(13, 148, 136, 0.15);
+  }
+  /* Ensure touch scrolling is smooth */
+  .overflow-x-auto,
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Utility for horizontal scroll containers */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.overflow-x-auto {
+  overscroll-behavior-x: contain;
+}
+
+/* Design system utilities — consistent radii / text */
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
